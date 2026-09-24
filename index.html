@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>超勤ログ</title>
-<meta name="theme-color" content="#0d7a6f">
+<meta name="theme-color" content="#1f5fd6">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -16,10 +16,10 @@ html{-webkit-text-size-adjust:100%}
 [hidden]{display:none!important}
 img{max-width:100%}
 :root{
-  --bg:#f2f5f3; --surface:#ffffff; --surface2:#e8eeeb; --line:#d5dedb;
-  --ink:#15201c; --muted:#56655f; --faint:#8a9893;
-  --accent:#0d7a6f; --accent-ink:#ffffff; --accent-soft:#d6ece8;
-  --cum:#3448b8; --grid:#e1e8e5;
+  --bg:#f0f4fb; --surface:#ffffff; --surface2:#e4ebf7; --line:#d0daec;
+  --ink:#10203d; --muted:#4f607e; --faint:#8494b0;
+  --accent:#1f5fd6; --accent-ink:#ffffff; --accent-soft:#d9e5fb;
+  --cum:#0b2a75; --grid:#dfe6f3;
   --warn:#a5560a; --warn-soft:#fbead2; --crit:#b3261e; --crit-soft:#fadbd8; --ok:#1b7a3d;
   --sans:system-ui,-apple-system,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",Meiryo,sans-serif;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Roboto Mono",monospace;
@@ -27,19 +27,19 @@ img{max-width:100%}
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0c1412; --surface:#15201d; --surface2:#1e2c28; --line:#2b3b36;
-    --ink:#e7f0ed; --muted:#a2b2ac; --faint:#6f817b;
-    --accent:#3cc4b4; --accent-ink:#06211d; --accent-soft:#17403a;
-    --cum:#9fb0ff; --grid:#22312d;
+    --bg:#0a1224; --surface:#121d36; --surface2:#1b2a4a; --line:#263859;
+    --ink:#e5ecfb; --muted:#9fb1d4; --faint:#6c80a8;
+    --accent:#6ea3ff; --accent-ink:#06163a; --accent-soft:#163061;
+    --cum:#b9cbff; --grid:#1e2e50;
     --warn:#f0b35c; --warn-soft:#3a2a10; --crit:#ff8a80; --crit-soft:#3d1a17; --ok:#6fd08c;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0c1412; --surface:#15201d; --surface2:#1e2c28; --line:#2b3b36;
-  --ink:#e7f0ed; --muted:#a2b2ac; --faint:#6f817b;
-  --accent:#3cc4b4; --accent-ink:#06211d; --accent-soft:#17403a;
-  --cum:#9fb0ff; --grid:#22312d;
+  --bg:#0a1224; --surface:#121d36; --surface2:#1b2a4a; --line:#263859;
+  --ink:#e5ecfb; --muted:#9fb1d4; --faint:#6c80a8;
+  --accent:#6ea3ff; --accent-ink:#06163a; --accent-soft:#163061;
+  --cum:#b9cbff; --grid:#1e2e50;
   --warn:#f0b35c; --warn-soft:#3a2a10; --crit:#ff8a80; --crit-soft:#3d1a17; --ok:#6fd08c;
   color-scheme:dark;
 }
@@ -117,9 +117,20 @@ svg text{font-family:var(--sans);fill:var(--muted)}
 .item.blank{opacity:.6}
 .item.blank.off,.item.blank.sat{opacity:.5}
 .item.off .d{color:var(--crit)}
-.item.sat .d{color:var(--cum)}
+.item.sat .d{color:var(--accent)}
 .item.blank .o{color:var(--faint)}
 .item.today .d{color:var(--accent)}
+.item.today{background:var(--accent-soft);box-shadow:-10px 0 0 var(--accent-soft),10px 0 0 var(--accent-soft)}
+.xrow{display:grid;grid-template-columns:1fr auto 1fr auto;gap:8px;align-items:center}
+.xrow .xdel{height:44px;width:44px;border:1px solid var(--line);background:var(--surface);border-radius:10px;color:var(--muted)}
+.brk{display:flex;justify-content:space-between;align-items:center;gap:8px;height:44px;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding-inline:12px;font-size:14px}
+.brk small{margin-left:8px;font-size:11.5px;color:var(--muted);font-weight:400}
+.brk.off .brk-l,.brk.off b{opacity:.55}
+.brk-r{display:flex;align-items:center;gap:8px}
+.brk button{height:32px;min-width:32px;border:1px solid var(--line);background:var(--surface);border-radius:8px;color:var(--muted);padding-inline:8px;font-size:13px}
+.brk b{font-weight:600}
+.autobrk{background:var(--surface2);border-radius:10px;padding:8px 12px;font-size:12.5px;color:var(--muted);line-height:1.6}
+.autobrk b{color:var(--ink);font-family:var(--mono);font-weight:600}
 .item.yr{grid-template-columns:1fr auto}
 
 .fab{position:fixed;right:max(16px,calc(50% - 280px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6;border:0;background:var(--accent);color:var(--accent-ink);font-weight:700;height:52px;padding-inline:22px;border-radius:26px;box-shadow:0 4px 14px rgba(0,0,0,.25);font-size:15px}
@@ -213,11 +224,14 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
       <div class="field"><label for="fS">開始</label><input type="time" id="fS" required></div>
       <div class="field"><label for="fE">終了</label><input type="time" id="fE" required></div>
     </div>
-    <div class="grid3">
-      <div class="field"><label for="fB1">休憩1 昼(分)</label><input type="number" id="fB1" min="0" step="5" inputmode="numeric"></div>
-      <div class="field"><label for="fB2">休憩2 定時後(分)</label><input type="number" id="fB2" min="0" step="5" inputmode="numeric"></div>
-      <div class="field"><label for="fB3">休憩3(分)</label><input type="number" id="fB3" min="0" step="5" inputmode="numeric"></div>
+    <div class="field"><span class="l">休憩</span>
+      <div id="autoRows" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="xList" style="display:flex;flex-direction:column;gap:8px"></div>
+      <button type="button" class="btn" id="xAdd" style="flex:none;height:40px">＋ 休憩を追加（開始〜終了）</button>
+      <div class="note" id="brkRule"></div>
+      <div class="autobrk" id="brkAuto"></div>
     </div>
+    <div class="hint" id="legacyNote" hidden>この記録は、以前の方式（休憩を分数で入力）で計算されています。保存すると、新しい休憩ルールで計算し直します。</div>
     <div class="field" id="stdField" hidden><label for="fStd">この日の所定時間(分)</label><input type="number" id="fStd" min="0" step="5" inputmode="numeric"></div>
     <div class="field"><label for="fNote">メモ</label><input type="text" id="fNote" style="height:44px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding-inline:10px;font-size:16px;width:100%"></div>
     <div class="preview"><div><small>実働</small><b class="num" id="pvWork">0:00</b></div><div><small>所定外</small><b class="num" id="pvOt">0:00</b></div><div><small>深夜</small><b class="num" id="pvNight">0:00</b></div></div>
@@ -246,8 +260,8 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
     </div>
     <div class="field"><label for="sStd">所定労働時間(分) 9:00-17:30 休憩45分 = 465</label><input type="number" id="sStd" min="0" step="5" inputmode="numeric"></div>
     <div class="grid2">
-      <div class="field"><label for="sB1">休憩1 昼の初期値(分)</label><input type="number" id="sB1" min="0" step="5" inputmode="numeric"></div>
-      <div class="field"><label for="sB2">休憩2 定時後の初期値(分)</label><input type="number" id="sB2" min="0" step="5" inputmode="numeric"></div>
+      <div class="field"><label for="sB1">昼休憩（実働6時間超で自動）分</label><input type="number" id="sB1" min="0" step="5" inputmode="numeric"></div>
+      <div class="field"><label for="sB2">定時後休憩（実働8時間以上で自動）分</label><input type="number" id="sB2" min="0" step="5" inputmode="numeric"></div>
     </div>
     <div class="grid3">
       <div class="field"><label for="sLimM">月の上限(h)</label><input type="number" id="sLimM" min="0" inputmode="numeric"></div>
@@ -335,14 +349,37 @@ function calc(e,key){
   var s=toMin(e.s),en=toMin(e.e);
   if(isNaN(s)||isNaN(en))return null;
   if(en<=s)en+=1440;
-  var span=en-s,std=num(e.std,465),b1=num(e.b1,0),b2=num(e.b2,0),b3=num(e.b3,0);
+  var span=en-s,std=num(e.std,465);
   var off=key?dayInfo(parseKey(key)).off:false;
-  var net=span-b1-b3, bb2=0;
-  if(off||net>std){bb2=b2}
-  net=Math.max(0,net-bb2);
+  var b1,b2,bx,net,need1=false,need2=false;
+  if(e.bv===2){
+    // 新方式: 実働(休憩を引いた時間)が 6時間以下=休憩なし / 6〜8時間=昼休憩 / 8時間以上=昼休憩+定時後休憩。
+    // そのほかの休憩(時刻入力)を引いた労働時間から、必要な自動休憩を求める。
+    var m1=num(e.m1,45),m2=num(e.m2,15);
+    bx=0;
+    (e.x||[]).forEach(function(q){
+      var x=toMin(q[0]),y=toMin(q[1]);if(isNaN(x)||isNaN(y))return;
+      if(y<=x)y+=1440;
+      if(x<s){x+=1440;y+=1440}
+      bx+=overlap(s,en,[[x,y]]);
+    });
+    var tw=Math.max(0,span-bx);
+    need1=tw>360;
+    need2=tw>=480+m1;
+    b1=(need1&&!e.nb1)?m1:0;
+    b2=(need2&&!e.nb2)?m2:0;
+    net=Math.max(0,tw-b1-b2);
+  }else{
+    // 旧方式(休憩を分数入力した過去の記録)
+    var lb1=num(e.b1,0),lb2=num(e.b2,0),lb3=num(e.b3,0);
+    net=span-lb1-lb3;
+    b2=(off||net>std)?lb2:0;
+    net=Math.max(0,net-b2);
+    b1=lb1;bx=lb3;
+  }
   var ot=off?net:Math.max(0,net-std);
   var night=overlap(s,en,[[0,300],[1320,1740]]);
-  return {work:net,ot:ot,night:night,std:std,span:span,s:s,e:en,off:off};
+  return {work:net,ot:ot,night:night,std:std,span:span,s:s,e:en,off:off,brk1:b1,brk2:b2,brkX:bx,need1:need1,need2:need2};
 }
 function endPeriod(key,c){
   var a=key.split("-").map(Number),y=a[0],m=a[1],d=a[2];
@@ -428,7 +465,7 @@ function demoEntries(){
   ds.forEach(function(d){
     if(d>today)return;if(dayInfo(d).off)return;
     var e=ends[n%ends.length];n++;
-    out[keyOf(d)]={s:"09:00",e:e,b1:45,b2:15,b3:0,std:465,t:"常勤",note:""};
+    out[keyOf(d)]={s:"09:00",e:e,x:[],m1:45,m2:15,std:465,t:"常勤",note:"",bv:2};
   });
   return out;
 }
@@ -517,11 +554,10 @@ function renderAll(){
   ["m","q","y"].forEach(function(k){
     var st=statusOf(rem[k]);if(!st)return;
     var tag=st==="crit"?"超過":"残10h未満";
-    var msg=st==="crit"?names[k]+"の上限を"+fmt(-rem[k])+"超えています":names[k]+"の上限まで残り "+fmt(rem[k]);
-    var sub="";
-    if(k==="m"&&!S.applied)sub="上限を超える見込みなら、越え申請の要否を確認してください";
-    if(k==="m"&&S.applied)sub="申請後の上限 "+(L.m/60)+"h で判定しています";
-    al+='<div class="alert '+st+'"><span class="tag">'+tag+'</span><div>'+msg+(sub?"<small>"+sub+"</small>":"")+"</div></div>";
+    var msg=st==="crit"?"超勤限度を "+fmt(-rem[k])+" 超えています。":"超勤限度に対し 残り10時間 を割りました。";
+    var sub="<small>申請必要有無を検討し上長に相談して下さい。</small>";
+    sub+="<small>対象：「"+names[k]+"」"+(st==="crit"?"":"（残り "+fmt(rem[k])+"）")+(k==="m"&&S.applied?"　申請後の上限 "+(L.m/60)+"h で判定":"")+"</small>";
+    al+='<div class="alert '+st+'"><span class="tag">'+tag+'</span><div>'+msg+sub+"</div></div>";
   });
   $("alerts").innerHTML=al;
 
@@ -711,20 +747,44 @@ function openEntry(key){
   var le=lastEntry(),isAlt=S.type==="交替";
   $("fS").value=e?e.s:(isAlt&&le?le.s:"09:00");
   $("fE").value=e?e.e:(isAlt&&le?le.e:"17:30");
-  $("fB1").value=e?e.b1:S.b1;
-  $("fB2").value=e?e.b2:S.b2;
-  $("fB3").value=e?e.b3:0;
   $("fStd").value=e?e.std:S.std;
   $("fNote").value=e?(e.note||""):"";
+  setX(e&&e.bv===2?e.x:[]);
+  nb1=!!(e&&e.nb1);nb2=!!(e&&e.nb2);
+  $("legacyNote").hidden=!(e&&e.bv!==2);
   $("stdField").hidden=!isAlt;$("fErr").hidden=true;
   $("fDel").hidden=!e;
   $("entrySheet").hidden=false;
   updatePreview();
 }
+var nb1=false,nb2=false;
+function addX(a,b){
+  var row=document.createElement("div");row.className="xrow";
+  row.innerHTML='<input type="time" class="xs" aria-label="休憩の開始"><span>〜</span><input type="time" class="xe" aria-label="休憩の終了"><button type="button" class="xdel" aria-label="この休憩を削除">✕</button>';
+  row.querySelector(".xs").value=a||"";row.querySelector(".xe").value=b||"";
+  row.addEventListener("input",updatePreview);
+  row.querySelector(".xdel").onclick=function(){row.remove();updatePreview()};
+  $("xList").appendChild(row);
+}
+function setX(list){$("xList").innerHTML="";(list||[]).forEach(function(q){addX(q[0],q[1])})}
+function getX(){
+  var out=[],partial=false;
+  Array.prototype.forEach.call($("xList").children,function(r){
+    var a=r.querySelector(".xs").value,b=r.querySelector(".xe").value;
+    if(a&&b)out.push([a,b]);else if(a||b)partial=true;
+  });
+  return {list:out,partial:partial};
+}
+$("xAdd").onclick=function(){addX("","");updatePreview()};
+$("autoRows").addEventListener("click",function(ev){
+  var b=ev.target.closest("button[data-a]");if(!b)return;
+  if(b.getAttribute("data-a")==="1")nb1=!nb1;else nb2=!nb2;
+  updatePreview();
+});
 function readForm(){
-  var S=state.data.settings;
-  return {s:$("fS").value,e:$("fE").value,b1:num($("fB1").value,0),b2:num($("fB2").value,0),b3:num($("fB3").value,0),
-    std:S.type==="交替"?num($("fStd").value,S.std):S.std,t:S.type,note:$("fNote").value.trim()};
+  var S=state.data.settings,xs=getX(),old=state.data.entries[$("fDate").value],keep=old&&old.bv===2;
+  return {s:$("fS").value,e:$("fE").value,x:xs.list,m1:keep?num(old.m1,45):num(S.b1,45),m2:keep?num(old.m2,15):num(S.b2,15),
+    std:S.type==="交替"?num($("fStd").value,S.std):S.std,t:S.type,note:$("fNote").value.trim(),bv:2,nb1:nb1,nb2:nb2};
 }
 function updatePreview(){
   var e=readForm(),r=calc(e,$("fDate").value),S=state.data.settings;
@@ -738,14 +798,28 @@ function updatePreview(){
   }
   if(r&&r.span>1440)hint="勤務が24時間を超えています。時刻を確認してください";
   if(!hint&&r&&r.off)hint="休日です。休憩を引いた全時間が所定外になります";
+  if(!hint&&getX().partial)hint="そのほかの休憩は、開始と終了の両方を入れてください（片方だけの行は計算に入りません）";
+  var bt=r?r.brk1+r.brk2+r.brkX:0;
+  var ar='',ap1=!!(r&&r.need1),ap2=!!(r&&r.need2);
+  [[1,"昼休憩","実働6時間超で自動",ap1,nb1,r?r.brk1:0],[2,"定時後休憩","実働8時間以上で自動",ap2,nb2,r?r.brk2:0]].forEach(function(q){
+    var cls='brk',val,btn='';
+    if(!q[3]){cls+=' off';val='対象外'}
+    else if(q[4]){cls+=' off';val='削除済み';btn='<button type="button" data-a="'+q[0]+'">戻す</button>'}
+    else{val=fmt(q[5]);btn='<button type="button" data-a="'+q[0]+'" aria-label="'+q[1]+'を削除">✕</button>'}
+    ar+='<div class="'+cls+'"><span class="brk-l">'+q[1]+'<small>'+q[2]+'</small></span><span class="brk-r"><b class="num">'+val+'</b>'+btn+'</span></div>';
+  });
+  $("autoRows").innerHTML=ar;
+  var rm1=num(S.b1,45),rm2=num(S.b2,15);
+  $("brkRule").textContent="実働（休憩を引いた時間）が 6時間以下：休憩なし ／ 6〜8時間："+rm1+"分 ／ 8時間以上："+rm1+"分＋"+rm2+"分";
+  $("brkAuto").innerHTML=r?'開始〜終了 <b>'+fmt(r.span)+'</b>　休憩の合計 <b>'+fmt(bt)+'</b>'+(((nb1&&ap1)||(nb2&&ap2))?'<br>削除した休憩は差し引きません。実際の休憩は「＋ 休憩を追加」で入力してください。':''):'開始と終了を入れると、休憩が表示されます';
   $("pvHint").hidden=!hint;$("pvHint").textContent=hint;
 }
-["fS","fE","fB1","fB2","fB3","fStd"].forEach(function(id){$(id).addEventListener("input",updatePreview)});
+["fS","fE","fStd"].forEach(function(id){$(id).addEventListener("input",updatePreview)});
 $("fDate").addEventListener("change",function(){
   var v=$("fDate").value;if(!v)return;
   var e=state.data.entries[v];
-  if(e){$("fS").value=e.s;$("fE").value=e.e;$("fB1").value=e.b1;$("fB2").value=e.b2;$("fB3").value=e.b3;$("fStd").value=e.std;$("fNote").value=e.note||"";$("fDel").hidden=false;$("entryTitle").textContent="勤務を修正"}
-  else{$("fDel").hidden=true;$("entryTitle").textContent="勤務を入力"}
+  if(e){$("fS").value=e.s;$("fE").value=e.e;$("fStd").value=e.std;$("fNote").value=e.note||"";setX(e.bv===2?e.x:[]);nb1=!!e.nb1;nb2=!!e.nb2;$("legacyNote").hidden=e.bv===2;$("fDel").hidden=false;$("entryTitle").textContent="勤務を修正"}
+  else{$("legacyNote").hidden=true;$("fDel").hidden=true;$("entryTitle").textContent="勤務を入力"}
   updatePreview();
 });
 var cfRes=null;
@@ -836,9 +910,9 @@ $("restoreFile").onchange=async function(){
   }catch(e){toast("読み込めませんでした: "+(e.message||e))}
 };
 $("btnCsv").onclick=function(){
-  var E=state.data.entries,rows=["日付,開始,終了,休憩1,休憩2,休憩3,所定時間(分),実働,所定外,深夜,休日出勤,勤務形態,メモ"];
+  var E=state.data.entries,rows=["日付,開始,終了,昼休憩(分),定時後休憩(分),そのほか休憩(分),所定時間(分),実働,所定外,深夜,休日出勤,勤務形態,メモ"];
   Object.keys(E).sort().forEach(function(k){var e=E[k],r=calc(e,k);if(!r)return;
-    rows.push([k,e.s,e.e,e.b1,e.b2,e.b3,e.std,fmt(r.work),fmt(r.ot),fmt(r.night),r.off?"○":"",e.t||"",'"'+String(e.note||"").replace(/"/g,'""')+'"'].join(","))});
+    rows.push([k,e.s,e.e,r.brk1,r.brk2,r.brkX,e.std,fmt(r.work),fmt(r.ot),fmt(r.night),r.off?"○":"",e.t||"",'"'+String(e.note||"").replace(/"/g,'""')+'"'].join(","))});
   saveFile("choukin-log.csv","\ufeff"+rows.join("\r\n"),"text/csv");
   toast("CSVを書き出しました");
 };
