@@ -44,8 +44,11 @@ img{max-width:100%}
   color-scheme:dark;
 }
 *{box-sizing:border-box}
+:root{--fs:1}
+.misschip{border:1px solid currentColor;background:transparent;border-radius:99px;padding:2px 12px;margin:6px 6px 0 0;font-weight:700;color:inherit}
+.item.leave .t{color:var(--accent)}
 html,body{background:var(--bg)}
-body{margin:0;color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;padding-inline:16px;padding-block:0 calc(96px + env(safe-area-inset-bottom,0px))}
+body{margin:0;color:var(--ink);font-family:var(--sans);font-size:calc(15px*var(--fs));line-height:1.55;padding-inline:16px;padding-block:0 calc(96px + env(safe-area-inset-bottom,0px))}
 .wrap{max-width:560px;margin-inline:auto;display:flex;flex-direction:column;gap:14px}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
@@ -55,49 +58,49 @@ button{cursor:pointer}
 header.top{position:sticky;top:0;z-index:5;background:var(--bg);padding-block:calc(12px + env(safe-area-inset-top,0px)) 8px;display:flex;flex-direction:column;gap:8px}
 .row{display:flex;align-items:center;gap:8px}
 .grow{flex:1;min-width:0}
-h1{font-size:17px;margin:0;font-weight:700;letter-spacing:.02em}
-.chip{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
+h1{font-size:calc(17px*var(--fs));margin:0;font-weight:700;letter-spacing:.02em}
+.chip{font-size:calc(12px*var(--fs));font-weight:700;padding:3px 10px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
 .iconbtn{border:1px solid var(--line);background:var(--surface);border-radius:10px;height:38px;min-width:38px;padding-inline:10px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .pnav{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px}
-.pnav button{border:0;background:transparent;height:34px;width:38px;border-radius:8px;font-size:18px;color:var(--muted)}
+.pnav button{border:0;background:transparent;height:34px;width:38px;border-radius:8px;font-size:calc(18px*var(--fs));color:var(--muted)}
 .pnav button:disabled{opacity:.35}
 .pnav .lbl{flex:1;text-align:center;line-height:1.25}
-.pnav .lbl b{display:block;font-size:15px}
-.pnav .lbl small{color:var(--muted);font-size:12px}
+.pnav .lbl b{display:block;font-size:calc(15px*var(--fs))}
+.pnav .lbl small{color:var(--muted);font-size:calc(12px*var(--fs))}
 
-.notice{font-size:12.5px;padding:8px 12px;border-radius:10px;background:var(--surface2);color:var(--muted)}
+.notice{font-size:calc(12.5px*var(--fs));padding:8px 12px;border-radius:10px;background:var(--surface2);color:var(--muted)}
 .notice button{border:0;background:none;color:var(--accent);font-weight:700;text-decoration:underline;padding:0 0 0 6px}
 
 .alerts{display:flex;flex-direction:column;gap:8px}
-.alert{display:flex;gap:10px;align-items:flex-start;border-radius:12px;padding:10px 12px;font-size:14px}
-.alert .tag{flex:none;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;margin-top:2px}
+.alert{display:flex;gap:10px;align-items:flex-start;border-radius:12px;padding:10px 12px;font-size:calc(14px*var(--fs))}
+.alert .tag{flex:none;font-size:calc(11px*var(--fs));font-weight:700;padding:2px 8px;border-radius:6px;margin-top:2px}
 .alert.warn{background:var(--warn-soft);color:var(--warn)} .alert.warn .tag{background:var(--warn);color:var(--surface)}
 .alert.crit{background:var(--crit-soft);color:var(--crit)} .alert.crit .tag{background:var(--crit);color:var(--surface)}
-.alert small{display:block;opacity:.9;font-size:12.5px}
+.alert small{display:block;opacity:.9;font-size:calc(12.5px*var(--fs))}
 
 .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
-.card h2{font-size:13px;font-weight:700;margin:0 0 10px;color:var(--muted);letter-spacing:.04em}
-.hero .big{font-size:44px;font-weight:600;line-height:1.05}
-.hero .of{font-size:16px;color:var(--muted)}
-.hero .rem{margin-top:4px;font-size:14px;color:var(--muted)}
+.card h2{font-size:calc(13px*var(--fs));font-weight:700;margin:0 0 10px;color:var(--muted);letter-spacing:.04em}
+.hero .big{font-size:calc(44px*var(--fs));font-weight:600;line-height:1.05}
+.hero .of{font-size:calc(16px*var(--fs));color:var(--muted)}
+.hero .rem{margin-top:4px;font-size:calc(14px*var(--fs));color:var(--muted)}
 .hero .rem b{color:var(--ink)}
 .bar{height:10px;border-radius:99px;background:var(--surface2);overflow:hidden;margin-top:12px}
 .bar i{display:block;height:100%;border-radius:99px;background:var(--accent)}
 .bar.warn i{background:var(--warn)} .bar.crit i{background:var(--crit)}
 .bar.thin{height:6px;margin-top:6px}
 .lims{display:grid;gap:14px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
-.lim .h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px}
+.lim .h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:calc(13px*var(--fs))}
 .lim .h span:first-child{font-weight:700}
-.lim .h .num{font-size:14px}
-.lim .sub{font-size:12px;color:var(--muted);margin-top:3px}
-.stats{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.lim .h .num{font-size:calc(14px*var(--fs))}
+.lim .sub{font-size:calc(12px*var(--fs));color:var(--muted);margin-top:3px}
+.stats{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:calc(13px*var(--fs));color:var(--muted)}
 .stats b{color:var(--ink);font-family:var(--mono);font-weight:600}
 
-#readout{font-size:13px;min-height:22px;color:var(--muted)}
+#readout{font-size:calc(13px*var(--fs));min-height:22px;color:var(--muted)}
 #readout b{color:var(--ink)}
 .chartbox{touch-action:pan-y}
 svg text{font-family:var(--sans);fill:var(--muted)}
-.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:6px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:calc(12px*var(--fs));color:var(--muted);margin-bottom:6px}
 .legend i{display:inline-block;vertical-align:middle;margin-right:5px}
 .lg-bar{width:10px;height:10px;border-radius:2px 2px 0 0;background:var(--accent)}
 .lg-line{width:16px;height:2px;background:var(--cum)}
@@ -106,13 +109,13 @@ svg text{font-family:var(--sans);fill:var(--muted)}
 .list{display:flex;flex-direction:column}
 .item{display:grid;grid-template-columns:92px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line);background:none;border-inline:0;border-bottom:0;text-align:left;width:100%}
 .item:first-child{border-top:0}
-.item .d{font-weight:700;font-size:14px}
-.item .d small{display:block;font-weight:400;color:var(--muted);font-size:12px}
-.item .t{font-size:13px;color:var(--muted)}
-.item .t em{font-style:normal;color:var(--faint);font-size:12px}
-.item .o{text-align:right;font-size:16px;font-weight:600}
-.item .o small{display:block;font-size:11px;color:var(--muted);font-family:var(--sans);font-weight:400}
-.empty{color:var(--muted);font-size:14px;padding:6px 0}
+.item .d{font-weight:700;font-size:calc(14px*var(--fs))}
+.item .d small{display:block;font-weight:400;color:var(--muted);font-size:calc(12px*var(--fs))}
+.item .t{font-size:calc(13px*var(--fs));color:var(--muted)}
+.item .t em{font-style:normal;color:var(--faint);font-size:calc(12px*var(--fs))}
+.item .o{text-align:right;font-size:calc(16px*var(--fs));font-weight:600}
+.item .o small{display:block;font-size:calc(11px*var(--fs));color:var(--muted);font-family:var(--sans);font-weight:400}
+.empty{color:var(--muted);font-size:calc(14px*var(--fs));padding:6px 0}
 .wrap-in{display:flex;flex-direction:column;gap:14px}
 .item.blank{opacity:.6}
 .item.blank.off,.item.blank.sat{opacity:.5}
@@ -123,43 +126,43 @@ svg text{font-family:var(--sans);fill:var(--muted)}
 .item.today{background:var(--accent-soft);box-shadow:-10px 0 0 var(--accent-soft),10px 0 0 var(--accent-soft)}
 .xrow{display:grid;grid-template-columns:1fr auto 1fr auto;gap:8px;align-items:center}
 .xrow .xdel{height:44px;width:44px;border:1px solid var(--line);background:var(--surface);border-radius:10px;color:var(--muted)}
-.brk{display:flex;justify-content:space-between;align-items:center;gap:8px;height:44px;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding-inline:12px;font-size:14px}
-.brk small{margin-left:8px;font-size:11.5px;color:var(--muted);font-weight:400}
+.brk{display:flex;justify-content:space-between;align-items:center;gap:8px;height:44px;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding-inline:12px;font-size:calc(14px*var(--fs))}
+.brk small{margin-left:8px;font-size:calc(11.5px*var(--fs));color:var(--muted);font-weight:400}
 .brk.off .brk-l,.brk.off b{opacity:.55}
 .brk-r{display:flex;align-items:center;gap:8px}
-.brk button{height:32px;min-width:32px;border:1px solid var(--line);background:var(--surface);border-radius:8px;color:var(--muted);padding-inline:8px;font-size:13px}
+.brk button{height:32px;min-width:32px;border:1px solid var(--line);background:var(--surface);border-radius:8px;color:var(--muted);padding-inline:8px;font-size:calc(13px*var(--fs))}
 .brk b{font-weight:600}
-.autobrk{background:var(--surface2);border-radius:10px;padding:8px 12px;font-size:12.5px;color:var(--muted);line-height:1.6}
+.autobrk{background:var(--surface2);border-radius:10px;padding:8px 12px;font-size:calc(12.5px*var(--fs));color:var(--muted);line-height:1.6}
 .autobrk b{color:var(--ink);font-family:var(--mono);font-weight:600}
 .item.yr{grid-template-columns:1fr auto}
 
-.fab{position:fixed;right:max(16px,calc(50% - 280px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6;border:0;background:var(--accent);color:var(--accent-ink);font-weight:700;height:52px;padding-inline:22px;border-radius:26px;box-shadow:0 4px 14px rgba(0,0,0,.25);font-size:15px}
+.fab{position:fixed;right:max(16px,calc(50% - 280px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6;border:0;background:var(--accent);color:var(--accent-ink);font-weight:700;height:52px;padding-inline:22px;border-radius:26px;box-shadow:0 4px 14px rgba(0,0,0,.25);font-size:calc(15px*var(--fs))}
 
 .sheet{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center}
 .sheet[hidden]{display:none}
 .panel{background:var(--surface);width:100%;max-width:560px;max-height:92%;overflow:auto;border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
-.panel h3{margin:0;font-size:16px}
+.panel h3{margin:0;font-size:calc(16px*var(--fs))}
 .field{display:flex;flex-direction:column;gap:5px}
-.field>label,.field>span.l{font-size:12.5px;font-weight:700;color:var(--muted)}
+.field>label,.field>span.l{font-size:calc(12.5px*var(--fs));font-weight:700;color:var(--muted)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-input[type=time],input[type=date],input[type=number],input[type=text],select,textarea{width:100%;height:44px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding-inline:10px;font-size:16px}
+input[type=time],input[type=date],input[type=number],input[type=text],select,textarea{width:100%;height:44px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding-inline:10px;font-size:calc(16px*var(--fs))}
 textarea{height:auto;padding:8px 10px;resize:vertical}
 .seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:var(--surface2);border-radius:10px;padding:3px;gap:3px}
 .seg button{border:0;background:transparent;height:38px;border-radius:8px;font-weight:700;color:var(--muted)}
 .seg button[aria-pressed=true]{background:var(--surface);color:var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.15)}
 .preview{background:var(--surface2);border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
-.preview small{display:block;color:var(--muted);font-size:11.5px}
-.preview b{font-size:19px;font-weight:600}
-.hint{font-size:12.5px;padding:8px 10px;border-radius:8px;background:var(--warn-soft);color:var(--warn)}
+.preview small{display:block;color:var(--muted);font-size:calc(11.5px*var(--fs))}
+.preview b{font-size:calc(19px*var(--fs));font-weight:600}
+.hint{font-size:calc(12.5px*var(--fs));padding:8px 10px;border-radius:8px;background:var(--warn-soft);color:var(--warn)}
 .btns{display:flex;gap:10px}
 .btn{flex:1;height:46px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-weight:700}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .btn.danger{color:var(--crit);flex:none;padding-inline:16px}
-.check{display:flex;gap:10px;align-items:center;font-weight:500;font-size:15px}
+.check{display:flex;gap:10px;align-items:center;font-weight:500;font-size:calc(15px*var(--fs))}
 .check input{width:22px;height:22px;accent-color:var(--accent)}
-.note{font-size:12.5px;color:var(--muted)}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:99px;font-size:13px;z-index:30}
+.note{font-size:calc(12.5px*var(--fs));color:var(--muted)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:99px;font-size:calc(13px*var(--fs));z-index:30}
 .toast[hidden]{display:none}
 @media (prefers-reduced-motion:no-preference){.bar i{transition:width .35s ease}}
 
@@ -220,11 +223,14 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
   <form class="panel" id="entryForm" novalidate>
     <h3 id="entryTitle">勤務を入力</h3>
     <div class="field"><label for="fDate">日付</label><input type="date" id="fDate" required></div>
-    <div class="grid2">
+    <div class="field"><span class="l">有休</span>
+      <div class="seg" id="fLv"><button type="button" data-v="">なし</button><button type="button" data-v="A">A休</button><button type="button" data-v="AM">半A 午前</button><button type="button" data-v="PM">半A 午後</button></div>
+    </div>
+    <div class="grid2" id="tRow">
       <div class="field"><label for="fS">開始</label><input type="time" id="fS" required></div>
       <div class="field"><label for="fE">終了</label><input type="time" id="fE" required></div>
     </div>
-    <div class="field"><span class="l">休憩</span>
+    <div class="field" id="brkField"><span class="l">休憩</span>
       <div id="autoRows" style="display:flex;flex-direction:column;gap:8px"></div>
       <div id="xList" style="display:flex;flex-direction:column;gap:8px"></div>
       <button type="button" class="btn" id="xAdd" style="flex:none;height:40px">＋ 休憩を追加（開始〜終了）</button>
@@ -233,8 +239,8 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
     </div>
     <div class="hint" id="legacyNote" hidden>この記録は、以前の方式（休憩を分数で入力）で計算されています。保存すると、新しい休憩ルールで計算し直します。</div>
     <div class="field" id="stdField" hidden><label for="fStd">この日の所定時間(分)</label><input type="number" id="fStd" min="0" step="5" inputmode="numeric"></div>
-    <div class="field"><label for="fNote">メモ</label><input type="text" id="fNote" style="height:44px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding-inline:10px;font-size:16px;width:100%"></div>
-    <div class="preview"><div><small>実働</small><b class="num" id="pvWork">0:00</b></div><div><small>所定外</small><b class="num" id="pvOt">0:00</b></div><div><small>深夜</small><b class="num" id="pvNight">0:00</b></div></div>
+    <div class="field"><label for="fNote">メモ</label><input type="text" id="fNote" style="height:44px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding-inline:10px;font-size:calc(16px*var(--fs));width:100%"></div>
+    <div class="preview" id="pvBox"><div><small>実働</small><b class="num" id="pvWork">0:00</b></div><div><small>所定外</small><b class="num" id="pvOt">0:00</b></div><div><small>深夜</small><b class="num" id="pvNight">0:00</b></div></div>
     <div class="hint" id="pvHint" hidden></div>
     <div class="hint" id="fErr" hidden style="background:var(--crit-soft);color:var(--crit)"></div>
     <div class="btns">
@@ -253,6 +259,9 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
     </div>
     <div class="field"><span class="l">画面テーマ</span>
       <div class="seg" id="sTheme"><button type="button" data-v="auto">自動</button><button type="button" data-v="light">ノーマル</button><button type="button" data-v="dark">ダーク</button></div>
+    </div>
+    <div class="field"><span class="l">文字サイズ</span>
+      <div class="seg" id="sFs"><button type="button" data-v="m">標準</button><button type="button" data-v="l">大</button><button type="button" data-v="x">特大</button><button type="button" data-v="xx">最大</button></div>
     </div>
     <div class="grid2">
       <div class="field"><label for="sClose">月の締め日</label><select id="sClose"></select></div>
@@ -296,14 +305,14 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
     <div class="field"><label for="hN">メモ</label><input type="text" id="hN" placeholder="例：創立記念日、年末年始"></div>
     <button type="submit" class="btn primary" style="flex:none">追加</button>
     <div class="field"><span class="l">追加済み</span><div class="list" id="hList"></div></div>
-    <details><summary id="hNatSum" style="font-size:13px;font-weight:700;color:var(--muted)">祝日（自動）</summary><div id="hNat" class="note" style="margin-top:8px"></div></details>
+    <details><summary id="hNatSum" style="font-size:calc(13px*var(--fs));font-weight:700;color:var(--muted)">祝日（自動）</summary><div id="hNat" class="note" style="margin-top:8px"></div></details>
     <div class="btns"><button type="button" class="btn" id="hClose">閉じる</button></div>
   </form>
 </div>
 <div class="sheet" id="cfSheet" hidden style="z-index:40">
   <div class="panel">
     <h3 id="cfTitle"></h3>
-    <p id="cfMsg" style="margin:0;font-size:14px;white-space:pre-line;color:var(--muted)"></p>
+    <p id="cfMsg" style="margin:0;font-size:calc(14px*var(--fs));white-space:pre-line;color:var(--muted)"></p>
     <div class="btns"><button type="button" class="btn" id="cfNo">やめる</button><button type="button" class="btn primary" id="cfYes">変更する</button></div>
   </div>
 </div>
@@ -329,7 +338,7 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
 "use strict";
 var $=function(id){return document.getElementById(id)};
 var WD=["日","月","火","水","木","金","土"];
-var DEF={settings:{v2:true,theme:"auto",type:"常勤",closing:20,fy:4,std:465,b1:45,b2:15,limM:40,limQ:180,limY:360,applied:false,appliedM:60},entries:{},monthly:{},days:{}};
+var DEF={settings:{v2:true,theme:"auto",type:"常勤",closing:20,fy:4,std:465,b1:45,b2:15,limM:40,limQ:180,limY:360,applied:false,appliedM:60,fs:"m"},entries:{},monthly:{},days:{}};
 var state={data:clone(DEF),demo:false,pIdx:0,editingKey:null,mode:"init",view:"summary"};
 var LSKEY="choukin-log-v1";
 
@@ -446,6 +455,24 @@ function dayInfo(d){
   if(w===0||w===6)return {off:true,label:""};
   return {off:false,label:""};
 }
+function lvStat(dates){
+  var E=entriesMap(),n=0;
+  dates.forEach(function(d){var e=E[keyOf(d)];if(e&&e.lv)n+=e.lv==="A"?1:.5});
+  return n>0?'<span>有休 <b>'+n+'日</b></span>':'';
+}
+function missingDays(){
+  if(state.demo)return [];
+  var E=state.data.entries,ks=Object.keys(E).sort();if(!ks.length)return [];
+  var c=state.data.settings.closing,M=state.data.monthly||{},out=[],t=new Date();t.setHours(0,0,0,0);
+  for(var n=1;n<=7;n++){
+    var d=new Date(t);d.setDate(d.getDate()-n);var k=keyOf(d);
+    if(k<ks[0])break;
+    if(dayInfo(d).off||E[k])continue;
+    if(M[pIdx(endPeriod(k,c))]!=null)continue;
+    out.push(k);
+  }
+  return out.reverse();
+}
 function periodStats(dates){
   var t=new Date();t.setHours(0,0,0,0);
   var s={work:0,el:0,cal:dates.length,calEl:0};
@@ -513,8 +540,11 @@ function statusOf(rem){return rem<=0?"crit":rem<600?"warn":""}
 function todayKey(){return keyOf(new Date())}
 
 var hostTheme=document.documentElement.getAttribute("data-theme");
+var FSM={m:1,l:1.15,x:1.3,xx:1.5};
+var LVT={A:"A休",AM:"半A（午前）",PM:"半A（午後）"};
 function applyTheme(){
   var t=state.data.settings.theme,r=document.documentElement;
+  r.style.setProperty("--fs",FSM[state.data.settings.fs]||1);
   if(t==="light"||t==="dark")r.setAttribute("data-theme",t);
   else if(hostTheme)r.setAttribute("data-theme",hostTheme);
   else r.removeAttribute("data-theme");
@@ -559,7 +589,14 @@ function renderAll(){
     sub+="<small>対象：「"+names[k]+"」"+(st==="crit"?"":"（残り "+fmt(rem[k])+"）")+(k==="m"&&S.applied?"　申請後の上限 "+(L.m/60)+"h で判定":"")+"</small>";
     al+='<div class="alert '+st+'"><span class="tag">'+tag+'</span><div>'+msg+sub+"</div></div>";
   });
+  var ms=missingDays();
+  if(ms.length){
+    var fd=function(k){var q=parseKey(k);return (q.getMonth()+1)+"/"+q.getDate()+"（"+WD[q.getDay()]+"）"};
+    var chips=ms.slice(0,4).map(function(k){return '<button type="button" class="misschip" data-miss="'+k+'">'+fd(k)+'</button>'}).join("")+(ms.length>4?'他 '+(ms.length-4)+' 日':'');
+    al+='<div class="alert warn"><span class="tag">未入力</span><div>'+(ms.length===1?fd(ms[0])+" の入力がありません。":"直近7日に入力のない稼働日があります。")+"入力をお願いします。<small>日付をタップすると入力できます。休暇は「有休」で登録できます。</small>"+chips+"</div></div>";
+  }
   $("alerts").innerHTML=al;
+  Array.prototype.forEach.call($("alerts").querySelectorAll("[data-miss]"),function(b){b.onclick=function(){openEntry(b.getAttribute("data-miss"))}});
 
   // summary
   var stM=statusOf(rem.m),pct=function(u,l){return l>0?Math.min(100,u/l*100):100};
@@ -576,7 +613,7 @@ function renderAll(){
   h+='</div>';
   var ps=periodStats(dates);
   h+='<div class="stats"><span>稼働日数 <b>'+ps.work+'日</b></span><span>経過 <b>'+ps.el+'日</b></span><span>残り稼働 <b>'+ps.left+'日</b></span><span>暦日 <b>'+ps.calEl+'/'+ps.cal+'</b></span>'+(ps.left>0&&rem.m>0?'<span>残り1日あたり <b>'+fmt(rem.m/ps.left)+'</b></span>':'')+'</div>';
-  h+='<div class="stats" style="margin-top:0;padding-top:0;border-top:0"><span>深夜勤務(22:00-5:00) <b>'+fmt(T.night[i]||0)+'</b></span><span>休日出勤 <b>'+(T.hd[i]||0)+'回</b></span>'+(T.man[i]?'<span>合計のみ入力</span>':'<span>勤務日数 <b>'+(T.days[i]||0)+'日</b></span>')+'</div>';
+  h+='<div class="stats" style="margin-top:0;padding-top:0;border-top:0"><span>深夜勤務(22:00-5:00) <b>'+fmt(T.night[i]||0)+'</b></span><span>休日出勤 <b>'+(T.hd[i]||0)+'回</b></span>'+lvStat(dates)+(T.man[i]?'<span>合計のみ入力</span>':'<span>勤務日数 <b>'+(T.days[i]||0)+'日</b></span>')+'</div>';
   h+='<button class="btn" id="monBtn" style="width:100%;margin-top:14px;flex:none">この月度の合計だけ入力</button>';
   $("summary").innerHTML=h;
   $("monBtn").onclick=function(){openMon(i)};
@@ -675,18 +712,20 @@ function renderLog(dates,T,i,remM,limM,usedM){
   t+='<div class="rem">'+p.m+'月度　'+(remM>=0?'上限まで残り <b class="num">'+fmt(remM)+'</b>':'<b class="num" style="color:var(--crit)">'+fmt(-remM)+' 超過</b>')+'</div>';
   var ps=periodStats(dates);
   t+='<div class="stats"><span>稼働日数 <b>'+ps.work+'日</b></span><span>経過 <b>'+ps.el+'日</b></span><span>残り稼働 <b>'+ps.left+'日</b></span><span>暦日 <b>'+ps.calEl+'/'+ps.cal+'</b></span></div>';
-  t+='<div class="stats" style="margin-top:0;padding-top:0;border-top:0"><span>深夜 <b>'+fmt(T.night[i]||0)+'</b></span><span>休日出勤 <b>'+(T.hd[i]||0)+'回</b></span>'+(man?'<span>合計のみ入力</span>':'<span>勤務日数 <b>'+(T.days[i]||0)+'日</b></span>')+'</div>';
+  t+='<div class="stats" style="margin-top:0;padding-top:0;border-top:0"><span>深夜 <b>'+fmt(T.night[i]||0)+'</b></span><span>休日出勤 <b>'+(T.hd[i]||0)+'回</b></span>'+lvStat(dates)+(man?'<span>合計のみ入力</span>':'<span>勤務日数 <b>'+(T.days[i]||0)+'日</b></span>')+'</div>';
   $("logTop").innerHTML=t;
   var h=man?'<div class="empty">この月度は合計のみ入力です。日ごとの記録は集計に含まれません。</div>':"";
   dates.forEach(function(d){
     var k=keyOf(d),e=E[k],r=calc(e,k),w=d.getDay(),inf=dayInfo(d),ds=(d.getMonth()+1)+'/'+d.getDate();
-    var short=!!(r&&e.t==="FT"&&!r.off&&r.work<r.std);
+    var short=!!(r&&!e.lv&&e.t==="FT"&&!r.off&&r.work<r.std);
     var cls="item"+(k===tk?" today":"")+(inf.off?((w===6&&!inf.hol&&!inf.custom)?" sat":" off"):"")+(short?" short":"");
     var wl=WD[w]+'曜'+(inf.label?' · '+esc(inf.label):'');
     if(r){
       h+='<button class="'+cls+'" data-k="'+k+'"><span class="d">'+ds+'<small>'+wl+(e.t?' · '+esc(e.t):'')+'</small></span>'
-       +'<span class="t">'+esc(e.s)+' - '+esc(e.e)+'　実働 '+fmt(r.work)+(r.off?'<br><em>休日出勤</em>':'')+(short?'<br><em style="color:var(--warn)">基準 '+fmt(r.std)+' に '+fmt(r.std-r.work)+' 不足</em>':'')+(r.night?'<br><em>深夜 '+fmt(r.night)+'</em>':'')+(e.note?'<br><em>'+esc(e.note)+'</em>':'')+'</span>'
+       +'<span class="t">'+esc(e.s)+' - '+esc(e.e)+(e.lv?' ['+LVT[e.lv]+']':'')+'　実働 '+fmt(r.work)+(r.off?'<br><em>休日出勤</em>':'')+(short?'<br><em style="color:var(--warn)">基準 '+fmt(r.std)+' に '+fmt(r.std-r.work)+' 不足</em>':'')+(r.night?'<br><em>深夜 '+fmt(r.night)+'</em>':'')+(e.note?'<br><em>'+esc(e.note)+'</em>':'')+'</span>'
        +'<span class="o num">'+fmt(r.ot)+'<small>所定外</small></span></button>';
+    }else if(e&&e.lv){
+      h+='<button class="'+cls+' leave" data-k="'+k+'"><span class="d">'+ds+'<small>'+wl+(e.t?' · '+esc(e.t):'')+'</small></span><span class="t"><b>'+LVT[e.lv]+'</b>'+(e.note?'<br><em>'+esc(e.note)+'</em>':'')+'</span><span class="o num">-</span></button>';
     }else{
       h+='<button class="'+cls+' blank" data-k="'+k+'"><span class="d">'+ds+'<small>'+wl+'</small></span><span class="t"><em>記録なし</em></span><span class="o num">-</span></button>';
     }
@@ -736,7 +775,7 @@ Array.prototype.forEach.call($("tabs").children,function(b){b.onclick=function()
 
 /* ---------- entry editor ---------- */
 function lastEntry(){
-  var E=state.data.entries,ks=Object.keys(E).sort();return ks.length?E[ks[ks.length-1]]:null;
+  var E=state.data.entries,ks=Object.keys(E).sort().filter(function(k){return E[k].s&&E[k].e});return ks.length?E[ks[ks.length-1]]:null;
 }
 function openEntry(key){
   if(state.demo){state.demo=false;renderAll()}
@@ -745,8 +784,9 @@ function openEntry(key){
   $("entryTitle").textContent=e?"勤務を修正":"勤務を入力";
   $("fDate").value=key;
   var le=lastEntry(),isAlt=S.type==="交替";
-  $("fS").value=e?e.s:(isAlt&&le?le.s:"09:00");
-  $("fE").value=e?e.e:(isAlt&&le?le.e:"17:30");
+  $("fS").value=e&&e.s?e.s:(isAlt&&le?le.s:"09:00");
+  $("fE").value=e&&e.e?e.e:(isAlt&&le?le.e:"17:30");
+  setLv(e&&e.lv||"");
   $("fStd").value=e?e.std:S.std;
   $("fNote").value=e?(e.note||""):"";
   setX(e&&e.bv===2?e.x:[]);
@@ -757,7 +797,18 @@ function openEntry(key){
   $("entrySheet").hidden=false;
   updatePreview();
 }
-var nb1=false,nb2=false;
+var nb1=false,nb2=false,lv="";
+function setLv(v){
+  lv=v||"";
+  Array.prototype.forEach.call($("fLv").children,function(b){b.setAttribute("aria-pressed",b.getAttribute("data-v")===lv?"true":"false")});
+  var a=lv==="A";
+  $("tRow").hidden=a;$("brkField").hidden=a;$("pvBox").hidden=a;
+}
+Array.prototype.forEach.call($("fLv").children,function(b){b.onclick=function(){
+  setLv(b.getAttribute("data-v"));
+  if(lv!=="A"){if(!$("fS").value)$("fS").value="09:00";if(!$("fE").value)$("fE").value="17:30"}
+  updatePreview();
+}});
 function addX(a,b){
   var row=document.createElement("div");row.className="xrow";
   row.innerHTML='<input type="time" class="xs" aria-label="休憩の開始"><span>〜</span><input type="time" class="xe" aria-label="休憩の終了"><button type="button" class="xdel" aria-label="この休憩を削除">✕</button>';
@@ -783,8 +834,11 @@ $("autoRows").addEventListener("click",function(ev){
 });
 function readForm(){
   var S=state.data.settings,xs=getX(),old=state.data.entries[$("fDate").value],keep=old&&old.bv===2;
-  return {s:$("fS").value,e:$("fE").value,x:xs.list,m1:keep?num(old.m1,45):num(S.b1,45),m2:keep?num(old.m2,15):num(S.b2,15),
+  if(lv==="A")return {lv:"A",s:"",e:"",x:[],m1:num(S.b1,45),m2:num(S.b2,15),std:S.std,t:S.type,note:$("fNote").value.trim(),bv:2,nb1:false,nb2:false};
+  var f={s:$("fS").value,e:$("fE").value,x:xs.list,m1:keep?num(old.m1,45):num(S.b1,45),m2:keep?num(old.m2,15):num(S.b2,15),
     std:S.type==="交替"?num($("fStd").value,S.std):S.std,t:S.type,note:$("fNote").value.trim(),bv:2,nb1:nb1,nb2:nb2};
+  if(lv)f.lv=lv;
+  return f;
 }
 function updatePreview(){
   var e=readForm(),r=calc(e,$("fDate").value),S=state.data.settings;
@@ -798,6 +852,8 @@ function updatePreview(){
   }
   if(r&&r.span>1440)hint="勤務が24時間を超えています。時刻を確認してください";
   if(!hint&&r&&r.off)hint="休日です。休憩を引いた全時間が所定外になります";
+  if(lv==="A")hint="A休（1日の有休）として記録します。勤務時間の入力は不要です";
+  else if(!hint&&lv)hint="半A："+"所定時間は "+fmt(S.type==="交替"?num($("fStd").value,S.std):S.std)+" のまま計算します（実働が所定を超えた分が所定外です）";
   if(!hint&&getX().partial)hint="そのほかの休憩は、開始と終了の両方を入れてください（片方だけの行は計算に入りません）";
   var bt=r?r.brk1+r.brk2+r.brkX:0;
   var ar='',ap1=!!(r&&r.need1),ap2=!!(r&&r.need2);
@@ -818,8 +874,8 @@ function updatePreview(){
 $("fDate").addEventListener("change",function(){
   var v=$("fDate").value;if(!v)return;
   var e=state.data.entries[v];
-  if(e){$("fS").value=e.s;$("fE").value=e.e;$("fStd").value=e.std;$("fNote").value=e.note||"";setX(e.bv===2?e.x:[]);nb1=!!e.nb1;nb2=!!e.nb2;$("legacyNote").hidden=e.bv===2;$("fDel").hidden=false;$("entryTitle").textContent="勤務を修正"}
-  else{$("legacyNote").hidden=true;$("fDel").hidden=true;$("entryTitle").textContent="勤務を入力"}
+  if(e){$("fS").value=e.s||"09:00";$("fE").value=e.e||"17:30";setLv(e.lv||"");$("fStd").value=e.std;$("fNote").value=e.note||"";setX(e.bv===2?e.x:[]);nb1=!!e.nb1;nb2=!!e.nb2;$("legacyNote").hidden=e.bv===2;$("fDel").hidden=false;$("entryTitle").textContent="勤務を修正"}
+  else{setLv("");$("legacyNote").hidden=true;$("fDel").hidden=true;$("entryTitle").textContent="勤務を入力"}
   updatePreview();
 });
 var cfRes=null;
@@ -828,7 +884,7 @@ function cfDone(v){$("cfSheet").hidden=true;var r=cfRes;cfRes=null;if(r)r(v)}
 $("cfYes").onclick=function(){cfDone(true)};
 $("cfNo").onclick=function(){cfDone(false)};
 $("cfSheet").addEventListener("click",function(ev){if(ev.target===$("cfSheet"))cfDone(false)});
-function brief(e,k){var r=calc(e,k);return e.s+"-"+e.e+"（所定外 "+fmt(r?r.ot:0)+"）"}
+function brief(e,k){var r=calc(e,k);if(e.lv==="A")return LVT.A;return e.s+"-"+e.e+(e.lv?" "+LVT[e.lv]:"")+"（所定外 "+fmt(r?r.ot:0)+"）"}
 $("entryForm").addEventListener("submit",function(ev){
   ev.preventDefault();$("fErr").hidden=true;
   saveEntry().catch(function(err){fail(String(err&&err.message||err))});
@@ -836,7 +892,7 @@ $("entryForm").addEventListener("submit",function(ev){
 function fail(m){$("fErr").textContent="保存できませんでした: "+m;$("fErr").hidden=false;toast("保存できませんでした")}
 async function saveEntry(){
   var k=$("fDate").value;if(!k){fail("日付を入力してください");return}
-  var e=readForm();if(!calc(e,k)){fail("開始と終了の時刻を入力してください");return}
+  var e=readForm();if(e.lv!=="A"&&!calc(e,k)){fail("開始と終了の時刻を入力してください");return}
   var old=state.data.entries[k];
   if(old){
     var ok=await askConfirm("記録を変更しますか？",fmtD(k)+" の記録を変更します。\n変更前　"+brief(old,k)+"\n変更後　"+brief(e,k),"変更する");
@@ -870,6 +926,7 @@ function fillSettings(){
   var S=state.data.settings;
   Array.prototype.forEach.call($("sType").children,function(b){b.setAttribute("aria-pressed",b.getAttribute("data-v")===S.type?"true":"false")});
   Array.prototype.forEach.call($("sTheme").children,function(b){b.setAttribute("aria-pressed",b.getAttribute("data-v")===(S.theme||"auto")?"true":"false")});
+  Array.prototype.forEach.call($("sFs").children,function(b){b.setAttribute("aria-pressed",b.getAttribute("data-v")===(S.fs||"m")?"true":"false")});
   $("sClose").value=S.closing;$("sFy").value=S.fy;$("sStd").value=S.std;$("sB1").value=S.b1;$("sB2").value=S.b2;
   $("sLimM").value=S.limM;$("sLimQ").value=S.limQ;$("sLimY").value=S.limY;
   $("sApplied").checked=!!S.applied;$("sAppliedM").value=S.appliedM;$("sAppliedBox").hidden=!S.applied;
@@ -878,6 +935,7 @@ function fillSettings(){
 $("btnSettings").onclick=function(){fillSettings();$("setSheet").hidden=false};
 $("sClose2").onclick=function(){$("setSheet").hidden=true};
 Array.prototype.forEach.call($("sType").children,function(b){b.onclick=function(){state.data.settings.type=b.getAttribute("data-v");fillSettings();persist();renderAll()}});
+Array.prototype.forEach.call($("sFs").children,function(b){b.onclick=function(){state.data.settings.fs=b.getAttribute("data-v");fillSettings();persist();renderAll()}});
 Array.prototype.forEach.call($("sTheme").children,function(b){b.onclick=function(){state.data.settings.theme=b.getAttribute("data-v");fillSettings();persist();renderAll()}});
 function bind(id,key,conv){$(id).addEventListener("change",function(){state.data.settings[key]=conv($(id));persist();renderAll()})}
 var toNum=function(el){return num(el.value,0)};
@@ -910,9 +968,10 @@ $("restoreFile").onchange=async function(){
   }catch(e){toast("読み込めませんでした: "+(e.message||e))}
 };
 $("btnCsv").onclick=function(){
-  var E=state.data.entries,rows=["日付,開始,終了,昼休憩(分),定時後休憩(分),そのほか休憩(分),所定時間(分),実働,所定外,深夜,休日出勤,勤務形態,メモ"];
-  Object.keys(E).sort().forEach(function(k){var e=E[k],r=calc(e,k);if(!r)return;
-    rows.push([k,e.s,e.e,r.brk1,r.brk2,r.brkX,e.std,fmt(r.work),fmt(r.ot),fmt(r.night),r.off?"○":"",e.t||"",'"'+String(e.note||"").replace(/"/g,'""')+'"'].join(","))});
+  var E=state.data.entries,rows=["日付,開始,終了,昼休憩(分),定時後休憩(分),そのほか休憩(分),所定時間(分),実働,所定外,深夜,休日出勤,勤務形態,メモ,有休"];
+  Object.keys(E).sort().forEach(function(k){var e=E[k],r=calc(e,k);if(!r&&!e.lv)return;
+    r=r||{brk1:"",brk2:"",brkX:"",work:null,ot:null,night:null,off:false};var f=function(v){return v==null?"":fmt(v)};
+    rows.push([k,e.s||"",e.e||"",r.brk1,r.brk2,r.brkX,e.std,f(r.work),f(r.ot),f(r.night),r.off?"○":"",e.t||"",'"'+String(e.note||"").replace(/"/g,'""')+'"',e.lv?LVT[e.lv]:""].join(","))});
   saveFile("choukin-log.csv","\ufeff"+rows.join("\r\n"),"text/csv");
   toast("CSVを書き出しました");
 };
