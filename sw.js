@@ -1,7 +1,7 @@
 // 超勤ログ Service Worker
 // アプリ本体だけをキャッシュします。記録データは端末内(localStorage)にあり、ここでは扱いません。
 // ファイルを更新したときは、下の VERSION の数字を上げてください。
-const VERSION = "v9";
+const VERSION = "v10";
 const CACHE = "choukin-" + VERSION;
 const FILES = [
   "./",

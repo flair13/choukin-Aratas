@@ -164,6 +164,11 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
 .note{font-size:calc(12.5px*var(--fs));color:var(--muted)}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:99px;font-size:calc(13px*var(--fs));z-index:30}
 .toast[hidden]{display:none}
+.quickrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qbtn{height:56px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:calc(15px*var(--fs));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.qbtn small{font-weight:400;color:var(--muted);font-size:calc(12px*var(--fs))}
+.qbtn.done{border-color:var(--accent);color:var(--accent)}
+.cico{font-size:calc(12.5px*var(--fs));color:var(--muted);margin-top:2px}
 @media (prefers-reduced-motion:no-preference){.bar i{transition:width .35s ease}}
 
 .card.lv-warn{background:var(--warn-soft);border-color:var(--warn)}
@@ -193,6 +198,10 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
     <div class="seg" id="tabs"><button type="button" data-v="summary">サマリー</button><button type="button" data-v="log">ログ</button></div>
   </header>
 
+  <div class="quickrow">
+    <button type="button" class="qbtn" id="btnCheckIn">出社<small id="ciLbl">未打刻</small></button>
+    <button type="button" class="qbtn" id="btnCheckOut">退社<small id="coLbl">未打刻</small></button>
+  </div>
   <div id="notice"></div>
   <div class="alerts" id="alerts"></div>
   <div id="viewSummary" class="wrap-in">
@@ -237,6 +246,7 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
       <div class="note" id="brkRule"></div>
       <div class="autobrk" id="brkAuto"></div>
     </div>
+    <div class="note" id="ciCoInfo" hidden></div>
     <div class="hint" id="legacyNote" hidden>この記録は、以前の方式（休憩を分数で入力）で計算されています。保存すると、新しい休憩ルールで計算し直します。</div>
     <div class="field" id="stdField" hidden><label for="fStd">この日の所定時間(分)</label><input type="number" id="fStd" min="0" step="5" inputmode="numeric"></div>
     <div class="field"><label for="fNote">メモ</label><input type="text" id="fNote" style="height:44px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding-inline:10px;font-size:calc(16px*var(--fs));width:100%"></div>
@@ -553,6 +563,11 @@ function renderAll(){
   var S=state.data.settings;
   applyTheme();
   $("typeChip").textContent=S.type;
+  (function(){
+    var te=state.data.entries[todayKey()]||{};
+    $("ciLbl").textContent=te.ci||"未打刻";$("coLbl").textContent=te.co||"未打刻";
+    $("btnCheckIn").classList.toggle("done",!!te.ci);$("btnCheckOut").classList.toggle("done",!!te.co);
+  })();
   var T=totals(),L=limits(),i=state.pIdx,p=idxYM(i);
   var dates=periodDates(i,S.closing),a=dates[0],b=dates[dates.length-1];
   $("pLabel").innerHTML="<b>"+p.y+"年"+p.m+"月度</b><small>"+(a.getMonth()+1)+"/"+a.getDate()+" 〜 "+(b.getMonth()+1)+"/"+b.getDate()+"</small>";
@@ -722,10 +737,10 @@ function renderLog(dates,T,i,remM,limM,usedM){
     var wl=WD[w]+'曜'+(inf.label?' · '+esc(inf.label):'');
     if(r){
       h+='<button class="'+cls+'" data-k="'+k+'"><span class="d">'+ds+'<small>'+wl+(e.t?' · '+esc(e.t):'')+'</small></span>'
-       +'<span class="t">'+esc(e.s)+' - '+esc(e.e)+(e.lv?' ['+LVT[e.lv]+']':'')+'　実働 '+fmt(r.work)+(r.off?'<br><em>休日出勤</em>':'')+(short?'<br><em style="color:var(--warn)">基準 '+fmt(r.std)+' に '+fmt(r.std-r.work)+' 不足</em>':'')+(r.night?'<br><em>深夜 '+fmt(r.night)+'</em>':'')+(e.note?'<br><em>'+esc(e.note)+'</em>':'')+'</span>'
+       +'<span class="t">'+esc(e.s)+' - '+esc(e.e)+(e.lv?' ['+LVT[e.lv]+']':'')+((e.ci||e.co)?'<br><em>打刻 '+esc(e.ci||"-")+' / '+esc(e.co||"-")+'</em>':'')+'　実働 '+fmt(r.work)+(r.off?'<br><em>休日出勤</em>':'')+(short?'<br><em style="color:var(--warn)">基準 '+fmt(r.std)+' に '+fmt(r.std-r.work)+' 不足</em>':'')+(r.night?'<br><em>深夜 '+fmt(r.night)+'</em>':'')+(e.note?'<br><em>'+esc(e.note)+'</em>':'')+'</span>'
        +'<span class="o num">'+fmt(r.ot)+'<small>所定外</small></span></button>';
     }else if(e&&e.lv){
-      h+='<button class="'+cls+' leave" data-k="'+k+'"><span class="d">'+ds+'<small>'+wl+(e.t?' · '+esc(e.t):'')+'</small></span><span class="t"><b>'+LVT[e.lv]+'</b>'+(e.note?'<br><em>'+esc(e.note)+'</em>':'')+'</span><span class="o num">-</span></button>';
+      h+='<button class="'+cls+' leave" data-k="'+k+'"><span class="d">'+ds+'<small>'+wl+(e.t?' · '+esc(e.t):'')+'</small></span><span class="t"><b>'+LVT[e.lv]+'</b>'+((e.ci||e.co)?'<br><em>打刻 '+esc(e.ci||"-")+' / '+esc(e.co||"-")+'</em>':'')+(e.note?'<br><em>'+esc(e.note)+'</em>':'')+'</span><span class="o num">-</span></button>';
     }else{
       h+='<button class="'+cls+' blank" data-k="'+k+'"><span class="d">'+ds+'<small>'+wl+'</small></span><span class="t"><em>記録なし</em></span><span class="o num">-</span></button>';
     }
@@ -787,6 +802,7 @@ function openEntry(key){
   $("fS").value=e&&e.s?e.s:(isAlt&&le?le.s:"09:00");
   $("fE").value=e&&e.e?e.e:(isAlt&&le?le.e:"17:30");
   setLv(e&&e.lv||"");
+  showCiCo(key);
   $("fStd").value=e?e.std:S.std;
   $("fNote").value=e?(e.note||""):"";
   setX(e&&e.bv===2?e.x:[]);
@@ -834,10 +850,12 @@ $("autoRows").addEventListener("click",function(ev){
 });
 function readForm(){
   var S=state.data.settings,xs=getX(),old=state.data.entries[$("fDate").value],keep=old&&old.bv===2;
-  if(lv==="A")return {lv:"A",s:"",e:"",x:[],m1:num(S.b1,45),m2:num(S.b2,15),std:S.std,t:S.type,note:$("fNote").value.trim(),bv:2,nb1:false,nb2:false};
+  if(lv==="A"){var fa={lv:"A",s:"",e:"",x:[],m1:num(S.b1,45),m2:num(S.b2,15),std:S.std,t:S.type,note:$("fNote").value.trim(),bv:2,nb1:false,nb2:false};if(old&&old.ci)fa.ci=old.ci;if(old&&old.co)fa.co=old.co;return fa}
   var f={s:$("fS").value,e:$("fE").value,x:xs.list,m1:keep?num(old.m1,45):num(S.b1,45),m2:keep?num(old.m2,15):num(S.b2,15),
     std:S.type==="交替"?num($("fStd").value,S.std):S.std,t:S.type,note:$("fNote").value.trim(),bv:2,nb1:nb1,nb2:nb2};
   if(lv)f.lv=lv;
+  if(old&&old.ci)f.ci=old.ci;
+  if(old&&old.co)f.co=old.co;
   return f;
 }
 function updatePreview(){
@@ -876,6 +894,7 @@ $("fDate").addEventListener("change",function(){
   var e=state.data.entries[v];
   if(e){$("fS").value=e.s||"09:00";$("fE").value=e.e||"17:30";setLv(e.lv||"");$("fStd").value=e.std;$("fNote").value=e.note||"";setX(e.bv===2?e.x:[]);nb1=!!e.nb1;nb2=!!e.nb2;$("legacyNote").hidden=e.bv===2;$("fDel").hidden=false;$("entryTitle").textContent="勤務を修正"}
   else{setLv("");$("legacyNote").hidden=true;$("fDel").hidden=true;$("entryTitle").textContent="勤務を入力"}
+  showCiCo(v);
   updatePreview();
 });
 var cfRes=null;
@@ -912,6 +931,29 @@ $("fDel").onclick=async function(){
   persist();$("entrySheet").hidden=true;renderAll();toast("削除しました");
 };
 $("fab").onclick=function(){openEntry(todayKey())};
+function nowHHMM(){var d=new Date();return pad(d.getHours())+":"+pad(d.getMinutes())}
+function blankEntry(){var S=state.data.settings;return {s:"",e:"",x:[],m1:num(S.b1,45),m2:num(S.b2,15),std:S.std,t:S.type,note:"",bv:2,nb1:false,nb2:false}}
+function doCheck(which){
+  var k=todayKey(),e=state.data.entries[k];
+  if(!e){e=blankEntry();state.data.entries[k]=e}
+  var t=nowHHMM();
+  if(which==="in"){e.ci=t;if(!e.s)e.s=t}
+  else{e.co=t;if(!e.e)e.e=t}
+  persist();renderAll();
+  toast((which==="in"?"出社":"退社")+" "+t+" を記録しました");
+  if(state.editingKey===k&&!$("entrySheet").hidden){
+    if(which==="in"&&!$("fS").value)$("fS").value=t;
+    if(which==="out"&&!$("fE").value)$("fE").value=t;
+    updatePreview();showCiCo(k);
+  }
+}
+$("btnCheckIn").onclick=function(){doCheck("in")};
+$("btnCheckOut").onclick=function(){doCheck("out")};
+function showCiCo(k){
+  var e=state.data.entries[k],el=$("ciCoInfo");
+  if(e&&(e.ci||e.co)){el.hidden=false;el.textContent="打刻：出社 "+(e.ci||"-")+" ／ 退社 "+(e.co||"-")}
+  else el.hidden=true;
+}
 $("prevP").onclick=function(){state.pIdx--;renderAll()};
 $("nextP").onclick=function(){state.pIdx++;renderAll()};
 
