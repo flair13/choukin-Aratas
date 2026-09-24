@@ -148,8 +148,8 @@ svg text{font-family:var(--sans);fill:var(--muted)}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 input[type=time],input[type=date],input[type=number],input[type=text],select,textarea{width:100%;height:44px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding-inline:10px;font-size:calc(16px*var(--fs))}
 textarea{height:auto;padding:8px 10px;resize:vertical}
-.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:var(--surface2);border-radius:10px;padding:3px;gap:3px}
-.seg button{border:0;background:transparent;height:38px;border-radius:8px;font-weight:700;color:var(--muted)}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:stretch;background:var(--surface2);border-radius:10px;padding:3px;gap:3px}
+.seg button{border:0;background:transparent;min-height:38px;height:auto;padding-block:4px;line-height:1.2;white-space:normal;word-break:keep-all;border-radius:8px;font-weight:700;color:var(--muted)}
 .seg button[aria-pressed=true]{background:var(--surface);color:var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.15)}
 .preview{background:var(--surface2);border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
 .preview small{display:block;color:var(--muted);font-size:calc(11.5px*var(--fs))}
@@ -165,9 +165,8 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:99px;font-size:calc(13px*var(--fs));z-index:30}
 .toast[hidden]{display:none}
 .quickrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.qbtn{height:56px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:calc(15px*var(--fs));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-.qbtn small{font-weight:400;color:var(--muted);font-size:calc(12px*var(--fs))}
-.qbtn.done{border-color:var(--accent);color:var(--accent)}
+.qbtn{height:52px;border-radius:26px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:calc(15px*var(--fs));display:flex;align-items:center;justify-content:center}
+.qbtn.done{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .cico{font-size:calc(12.5px*var(--fs));color:var(--muted);margin-top:2px}
 @media (prefers-reduced-motion:no-preference){.bar i{transition:width .35s ease}}
 
@@ -199,8 +198,8 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
   </header>
 
   <div class="quickrow">
-    <button type="button" class="qbtn" id="btnCheckIn">出社<small id="ciLbl">未打刻</small></button>
-    <button type="button" class="qbtn" id="btnCheckOut">退社<small id="coLbl">未打刻</small></button>
+    <button type="button" class="qbtn" id="btnCheckIn">出社</button>
+    <button type="button" class="qbtn" id="btnCheckOut">退社</button>
   </div>
   <div id="notice"></div>
   <div class="alerts" id="alerts"></div>
@@ -235,6 +234,7 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
     <div class="field"><span class="l">有休</span>
       <div class="seg" id="fLv"><button type="button" data-v="">なし</button><button type="button" data-v="A">A休</button><button type="button" data-v="AM">半A 午前</button><button type="button" data-v="PM">半A 午後</button></div>
     </div>
+    <div class="note" id="ciCoInfo" hidden></div>
     <div class="grid2" id="tRow">
       <div class="field"><label for="fS">開始</label><input type="time" id="fS" required></div>
       <div class="field"><label for="fE">終了</label><input type="time" id="fE" required></div>
@@ -246,7 +246,6 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
       <div class="note" id="brkRule"></div>
       <div class="autobrk" id="brkAuto"></div>
     </div>
-    <div class="note" id="ciCoInfo" hidden></div>
     <div class="hint" id="legacyNote" hidden>この記録は、以前の方式（休憩を分数で入力）で計算されています。保存すると、新しい休憩ルールで計算し直します。</div>
     <div class="field" id="stdField" hidden><label for="fStd">この日の所定時間(分)</label><input type="number" id="fStd" min="0" step="5" inputmode="numeric"></div>
     <div class="field"><label for="fNote">メモ</label><input type="text" id="fNote" style="height:44px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding-inline:10px;font-size:calc(16px*var(--fs));width:100%"></div>
@@ -565,7 +564,6 @@ function renderAll(){
   $("typeChip").textContent=S.type;
   (function(){
     var te=state.data.entries[todayKey()]||{};
-    $("ciLbl").textContent=te.ci||"未打刻";$("coLbl").textContent=te.co||"未打刻";
     $("btnCheckIn").classList.toggle("done",!!te.ci);$("btnCheckOut").classList.toggle("done",!!te.co);
   })();
   var T=totals(),L=limits(),i=state.pIdx,p=idxYM(i);
