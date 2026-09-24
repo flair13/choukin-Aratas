@@ -1,0 +1,17 @@
+{
+  "name": "超勤ログ",
+  "short_name": "超勤ログ",
+  "description": "所定外時間（超勤）を記録し、月・3ヶ月・年間の上限までの残りを確認するアプリ",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f2f5f3",
+  "theme_color": "#0d7a6f",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
