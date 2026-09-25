@@ -128,6 +128,8 @@ svg text{font-family:var(--sans);fill:var(--muted)}
 .xrow .xdel{height:44px;width:44px;border:1px solid var(--line);background:var(--surface);border-radius:10px;color:var(--muted)}
 .brk{display:flex;justify-content:space-between;align-items:center;gap:8px;height:44px;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding-inline:12px;font-size:calc(14px*var(--fs))}
 .brk small{margin-left:8px;font-size:calc(11.5px*var(--fs));color:var(--muted);font-weight:400}
+.cicorow{display:flex;flex-direction:column;gap:8px}
+.cicorow input[type=time]{width:auto;height:32px;padding-inline:6px;font-size:calc(13px*var(--fs))}
 .brk.off .brk-l,.brk.off b{opacity:.55}
 .brk-r{display:flex;align-items:center;gap:8px}
 .brk button{height:32px;min-width:32px;border:1px solid var(--line);background:var(--surface);border-radius:8px;color:var(--muted);padding-inline:8px;font-size:calc(13px*var(--fs))}
@@ -234,7 +236,12 @@ textarea{height:auto;padding:8px 10px;resize:vertical}
     <div class="field"><span class="l">有休</span>
       <div class="seg" id="fLv"><button type="button" data-v="">なし</button><button type="button" data-v="A">A休</button><button type="button" data-v="AM">半A 午前</button><button type="button" data-v="PM">半A 午後</button></div>
     </div>
-    <div class="note" id="ciCoInfo" hidden></div>
+    <div class="field" id="ciCoField"><span class="l">打刻（出社・退社）</span>
+      <div class="cicorow">
+        <div class="brk"><span class="brk-l">出社<small>ワンタップ記録</small></span><span class="brk-r"><input type="time" id="fCi" aria-label="出社の打刻"><button type="button" id="ciClear" aria-label="出社の打刻を消す">✕</button></span></div>
+        <div class="brk"><span class="brk-l">退社<small>ワンタップ記録</small></span><span class="brk-r"><input type="time" id="fCo" aria-label="退社の打刻"><button type="button" id="coClear" aria-label="退社の打刻を消す">✕</button></span></div>
+      </div>
+    </div>
     <div class="grid2" id="tRow">
       <div class="field"><label for="fS">開始</label><input type="time" id="fS" required></div>
       <div class="field"><label for="fE">終了</label><input type="time" id="fE" required></div>
@@ -848,12 +855,12 @@ $("autoRows").addEventListener("click",function(ev){
 });
 function readForm(){
   var S=state.data.settings,xs=getX(),old=state.data.entries[$("fDate").value],keep=old&&old.bv===2;
-  if(lv==="A"){var fa={lv:"A",s:"",e:"",x:[],m1:num(S.b1,45),m2:num(S.b2,15),std:S.std,t:S.type,note:$("fNote").value.trim(),bv:2,nb1:false,nb2:false};if(old&&old.ci)fa.ci=old.ci;if(old&&old.co)fa.co=old.co;return fa}
+  if(lv==="A"){var fa={lv:"A",s:"",e:"",x:[],m1:num(S.b1,45),m2:num(S.b2,15),std:S.std,t:S.type,note:$("fNote").value.trim(),bv:2,nb1:false,nb2:false};if($("fCi").value)fa.ci=$("fCi").value;if($("fCo").value)fa.co=$("fCo").value;return fa}
   var f={s:$("fS").value,e:$("fE").value,x:xs.list,m1:keep?num(old.m1,45):num(S.b1,45),m2:keep?num(old.m2,15):num(S.b2,15),
     std:S.type==="交替"?num($("fStd").value,S.std):S.std,t:S.type,note:$("fNote").value.trim(),bv:2,nb1:nb1,nb2:nb2};
   if(lv)f.lv=lv;
-  if(old&&old.ci)f.ci=old.ci;
-  if(old&&old.co)f.co=old.co;
+  if($("fCi").value)f.ci=$("fCi").value;
+  if($("fCo").value)f.co=$("fCo").value;
   return f;
 }
 function updatePreview(){
@@ -948,10 +955,12 @@ function doCheck(which){
 $("btnCheckIn").onclick=function(){doCheck("in")};
 $("btnCheckOut").onclick=function(){doCheck("out")};
 function showCiCo(k){
-  var e=state.data.entries[k],el=$("ciCoInfo");
-  if(e&&(e.ci||e.co)){el.hidden=false;el.textContent="打刻：出社 "+(e.ci||"-")+" ／ 退社 "+(e.co||"-")}
-  else el.hidden=true;
+  var e=state.data.entries[k];
+  $("fCi").value=(e&&e.ci)||"";
+  $("fCo").value=(e&&e.co)||"";
 }
+$("ciClear").onclick=function(){$("fCi").value=""};
+$("coClear").onclick=function(){$("fCo").value=""};
 $("prevP").onclick=function(){state.pIdx--;renderAll()};
 $("nextP").onclick=function(){state.pIdx++;renderAll()};
 
