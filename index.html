@@ -16,7 +16,7 @@ html{-webkit-text-size-adjust:100%}
 [hidden]{display:none!important}
 img{max-width:100%}
 :root{
-  --bg:#f0f4fb; --surface:#ffffff; --surface2:#e4ebf7; --line:#d0daec;
+  --bg:#f0f4fb; --surface:#ffffff; --surface2:#e4ebf7; --line:#d0daec; --chart-bg:#ececef;
   --ink:#10203d; --muted:#4f607e; --faint:#8494b0;
   --accent:#1f5fd6; --accent-ink:#ffffff; --accent-soft:#d9e5fb;
   --cum:#0b2a75; --grid:#dfe6f3;
@@ -27,7 +27,7 @@ img{max-width:100%}
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0a1224; --surface:#121d36; --surface2:#1b2a4a; --line:#263859;
+    --bg:#0a1224; --surface:#121d36; --surface2:#1b2a4a; --line:#263859; --chart-bg:#1a1b1e;
     --ink:#e5ecfb; --muted:#9fb1d4; --faint:#6c80a8;
     --accent:#6ea3ff; --accent-ink:#06163a; --accent-soft:#163061;
     --cum:#b9cbff; --grid:#1e2e50;
@@ -36,7 +36,7 @@ img{max-width:100%}
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0a1224; --surface:#121d36; --surface2:#1b2a4a; --line:#263859;
+  --bg:#0a1224; --surface:#121d36; --surface2:#1b2a4a; --line:#263859; --chart-bg:#1a1b1e;
   --ink:#e5ecfb; --muted:#9fb1d4; --faint:#6c80a8;
   --accent:#6ea3ff; --accent-ink:#06163a; --accent-soft:#163061;
   --cum:#b9cbff; --grid:#1e2e50;
@@ -98,7 +98,7 @@ h1{font-size:calc(17px*var(--fs));margin:0;font-weight:700;letter-spacing:.02em}
 
 #readout{font-size:calc(13px*var(--fs));min-height:22px;color:var(--muted)}
 #readout b{color:var(--ink)}
-.chartbox{touch-action:pan-y}
+.chartbox{touch-action:pan-y;background:var(--chart-bg);border-radius:12px;padding:6px 4px}
 svg text{font-family:var(--sans);fill:var(--muted)}
 .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:calc(12px*var(--fs));color:var(--muted);margin-bottom:6px}
 .legend i{display:inline-block;vertical-align:middle;margin-right:5px}
@@ -137,6 +137,8 @@ svg text{font-family:var(--sans);fill:var(--muted)}
 .autobrk{background:var(--surface2);border-radius:10px;padding:8px 12px;font-size:calc(12.5px*var(--fs));color:var(--muted);line-height:1.6}
 .autobrk b{color:var(--ink);font-family:var(--mono);font-weight:600}
 .item.yr{grid-template-columns:1fr auto}
+.item.yr.over{background:var(--crit-soft);box-shadow:-10px 0 0 var(--crit-soft),10px 0 0 var(--crit-soft)}
+.item.yr.over40{background:var(--warn-soft);box-shadow:-10px 0 0 var(--warn-soft),10px 0 0 var(--warn-soft)}
 
 .fab{position:fixed;right:max(16px,calc(50% - 280px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6;border:0;background:var(--accent);color:var(--accent-ink);font-weight:700;height:52px;padding-inline:22px;border-radius:26px;box-shadow:0 4px 14px rgba(0,0,0,.25);font-size:calc(15px*var(--fs))}
 
@@ -755,12 +757,15 @@ function renderLog(dates,T,i,remM,limM,usedM){
 }
 function renderYear(T,i){
   var S=state.data.settings,p=idxYM(i),o=(p.m-S.fy+12)%12,ys=i-o,cur=pIdx(endPeriod(todayKey(),S.closing)),h="",sum=0;
+  var limEff=limits().m;
   for(var k=ys;k<ys+12;k++){
     var q=idxYM(k),man=T.man[k],has=T.ot[k]!=null;
+    var over=has&&T.ot[k]>limEff;
+    var over40=has&&!over&&S.applied&&T.ot[k]>40*60;
     if(has)sum+=T.ot[k];
     var wd=periodDates(k,S.closing).filter(function(d){return !dayInfo(d).off}).length;
     var sub='稼働'+wd+'日 · '+(man?'合計のみ入力':(T.days[k]?T.days[k]+'日分の記録':(k>cur?'これから':'未入力')))+(T.hd[k]?' · 休日出勤'+T.hd[k]+'回':'');
-    h+='<button class="item yr" data-i="'+k+'"><span class="d">'+q.y+'年'+q.m+'月度<small>'+sub+(k===i?' · 表示中':'')+'</small></span><span class="o num">'+(has?fmt(T.ot[k]):'-')+'</span></button>';
+    h+='<button class="item yr'+(over?' over':(over40?' over40':''))+'" data-i="'+k+'"><span class="d">'+q.y+'年'+q.m+'月度<small>'+sub+(over40?' · 40h超え（申請実施）':'')+(k===i?' · 表示中':'')+'</small></span><span class="o num">'+(has?fmt(T.ot[k]):'-')+'</span></button>';
   }
   h+='<div class="stats" style="margin-top:6px">年度合計 <b>'+fmt(sum)+'</b></div>';
   $("yearList").innerHTML=h;
@@ -943,17 +948,20 @@ function doCheck(which){
   if(!e){e=blankEntry();state.data.entries[k]=e}
   var t=nowHHMM();
   if(which==="in"){e.ci=t;if(!e.s)e.s=t}
-  else{e.co=t;if(!e.e)e.e=t}
+  else{e.co=t;e.e=t}
   persist();renderAll();
   toast((which==="in"?"出社":"退社")+" "+t+" を記録しました");
   if(state.editingKey===k&&!$("entrySheet").hidden){
     if(which==="in"&&!$("fS").value)$("fS").value=t;
-    if(which==="out"&&!$("fE").value)$("fE").value=t;
+    if(which==="out")$("fE").value=t;
     updatePreview();showCiCo(k);
   }
 }
 $("btnCheckIn").onclick=function(){doCheck("in")};
 $("btnCheckOut").onclick=function(){doCheck("out")};
+$("fCo").addEventListener("change",function(){
+  if($("fCo").value){$("fE").value=$("fCo").value;updatePreview()}
+});
 function showCiCo(k){
   var e=state.data.entries[k];
   $("fCi").value=(e&&e.ci)||"";
